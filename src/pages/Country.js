@@ -40,9 +40,6 @@ const Country = ({
   const [location, setLocation] = useState({})
   const [isWeatherLoading, setIsWeatherLoading] = useState(true)
 
-  console.log('Country component: country', country)
-  console.log('Country component: isLoading', isLoading)
-
   useEffect(() => {
     // Get location coords of country capital, to use for weather
     axios

@@ -10,14 +10,18 @@ const HeaderNav = ({
   isLoading,
   setIsLoading,
   setRegion,
+  setActiveRegion,
   setSubRegion,
+  setActiveSubregion,
 }) => {
   const inputRef = useRef()
 
   const clearInput = () => {
     setInput('')
     setRegion('All')
+    setActiveRegion('All')
     setSubRegion('')
+    setActiveSubregion('')
   }
 
   const handleChange = (e) => {
@@ -31,10 +35,10 @@ const HeaderNav = ({
 
     !isLoading ? setIsLoading(true) : isLoading
     setInput(e.target.value)
-
+    /* 
     setTimeout(() => {
       setIsLoading(false)
-    }, 1500)
+    }, 1500) */
   }
 
   if (countries.length === 1) {

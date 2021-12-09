@@ -5,8 +5,6 @@ import moment from 'moment'
 import Images from '../images/weather-animated/index'
 import '../assets/css/owm-left.css'
 import '../assets/css/owm-right.css'
-//import '../owm-left.css'
-//import '../owm-right.css'
 
 function WeatherWidget({ weather, unit, activeItem, country }) {
   const tempStyle = {

@@ -1,0 +1,11 @@
+/node_modules
+.env
+/src/Map/index1.js
+/src/assets/dist
+/world.svg
+/world2.svg
+/src/worldMap.js
+/src/all-countries2.json
+/src/pages/Countries2.js
+/src/pages/Country2.js
+/src/countriesList-old.json

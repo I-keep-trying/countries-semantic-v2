@@ -46,7 +46,37 @@ const HeaderNav = ({
     setSubRegion(countries[0].subregion)
   }
 
-  return isMobile ? (
+  return (
+    <>
+      <Menu inverted fixed="top" borderless>
+        <Menu.Item style={{padding: 0}} header>
+          <Icon className="App-logo" name="globe" color="teal" size="big" />
+          <p> World Countries</p>
+        </Menu.Item>
+        <Menu.Item>
+          {input.length > 0 ? (
+            <Input
+              icon={<Icon name="close" link onClick={clearInput} />}
+              type="search"
+              value={input}
+              onChange={handleChange}
+            />
+          ) : (
+            <Input
+              icon={<Icon name="search" />}
+              type="search"
+              value={input}
+              onChange={handleChange}
+              placeholder="Start typing to search"
+            />
+          )}
+        </Menu.Item>
+{/*         <Menu.Menu position="right"></Menu.Menu>
+ */}      </Menu>
+    </>
+  )
+
+/*   return isMobile ? (
     <>
       <Menu inverted fixed="top" borderless fluid>
         <Menu.Item header>
@@ -85,6 +115,9 @@ const HeaderNav = ({
       </Menu>
     </>
   )
-}
+ */
+ 
+ 
+ }
 
 export default HeaderNav

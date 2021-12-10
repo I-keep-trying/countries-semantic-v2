@@ -22,7 +22,7 @@ const Countries = () => {
   const [activeSubregion, setActiveSubregion] = useState('')
   const [region, setRegion] = useState('All')
   const [subregion, setSubRegion] = useState('')
-  const [country, setCountry] = useState(null)
+  const [, setCountry] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
 
   // get static lists of regions & subregions for labels on tabs

@@ -1,6 +1,6 @@
 import React from 'react'
 import { isMobile, isTablet } from 'react-device-detect'
-import { Container, Segment } from 'semantic-ui-react'
+import { Segment } from 'semantic-ui-react'
 import moment from 'moment'
 import Images from '../images/weather-animated/index'
 import '../assets/css/owm-left.css'

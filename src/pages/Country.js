@@ -17,8 +17,6 @@ import {
 import axios from 'axios'
 import Weather from '../components/Weather'
 import '../assets/css/owm-right.css'
-import map1 from '../map-afghanistan.png'
-//import '../owm-right.css'
 
 const Country = ({
   flag,

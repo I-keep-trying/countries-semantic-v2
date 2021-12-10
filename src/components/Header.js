@@ -1,5 +1,4 @@
 import React, { useRef } from 'react'
-import { isMobile } from 'react-device-detect'
 import { Menu, Icon, Input } from 'semantic-ui-react'
 import '../assets/css/App.css'
 

@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { isMobile } from 'react-device-detect'
-import axios from 'axios'
 import {
   Container,
   Button,
@@ -46,6 +45,7 @@ const Countries = () => {
       ? filterByRegion
       : filterByRegion.filter((r) => r.subregion === subregion)
 
+  // full response from restcountries api
   const getCountryData = countriesApiData.filter((c) => {
     return c.name.toLowerCase().startsWith(input.toLowerCase())
   })
@@ -100,7 +100,11 @@ const Countries = () => {
 
   const CountriesTable = () => (
     <>
-      <Table selectable stackable>
+      <Table
+        style={isMobile ? { marginTop: -20 } : { marginTop: 14 }}
+        selectable
+        stackable
+      >
         <Table.Body>
           {filterBySubregion.map((c) => {
             return (
@@ -161,16 +165,21 @@ const Countries = () => {
           <Container
             style={
               filterBySubregion.length < 250
-                ? { marginTop: 96 }
-                : { marginTop: 66 }
+                ? { marginTop: 86 }
+                : { marginTop: 45 }
             }
             fluid
           >
-            <Grid>
+            <Grid style={isMobile ? { marginTop: 0 } : { marginTop: -6 }}>
               {getSubregions[0].subregions.length > 0 ? (
                 <>
                   <Grid.Row style={{ margin: 0, padding: 0 }}>
-                    <Menu fixed="top" style={{ marginTop: 54 }} widths={8}>
+                    <Menu
+                      size={isMobile ? 'mini' : 'large'}
+                      fixed="top"
+                      style={isMobile ? { marginTop: 45 } : { marginTop: 45 }}
+                      widths={7}
+                    >
                       {regions.map((r) => {
                         return (
                           <Menu.Item
@@ -183,8 +192,9 @@ const Countries = () => {
                       })}
                     </Menu>
                     <Menu
+                      size={isMobile ? 'mini' : 'large'}
                       fixed="top"
-                      style={{ marginTop: 95 }}
+                      style={isMobile ? { marginTop: 75 } : { marginTop: 89 }}
                       widths={getSubregions[0].subregions.length}
                     >
                       {getSubregions[0].subregions.map((rs) => (
@@ -201,7 +211,12 @@ const Countries = () => {
               ) : (
                 <>
                   <Grid.Row style={{ margin: 0, padding: 0 }}>
-                    <Menu fixed="top" style={{ marginTop: 54 }} widths={8}>
+                    <Menu
+                      size={isMobile ? 'mini' : 'large'}
+                      fixed="top"
+                      style={isMobile ? { marginTop: 45 } : { marginTop: 45 }}
+                      widths={7}
+                    >
                       {regions.map((r) => (
                         <Menu.Item
                           key={r.id}

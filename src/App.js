@@ -1,7 +1,7 @@
 import React from 'react'
 import { Container } from 'semantic-ui-react'
 import Footer from './components/Footer'
-import Countries from './pages/Countries2'
+import Countries from './pages/Countries'
 
 const App = () => {
   return (

@@ -6,8 +6,11 @@
 /world2.svg
 /src/worldMap.js
 /src/all-countries2.json
-/src/pages/Countries2.js
-/src/pages/Country2.js
 /src/countriesList-old.json
 /src/App1.js
 /src/map-afghanistan.png
+/src/pages/SidebarExample.js
+/src/pages/Country2.js
+
+# Local Netlify folder
+.netlify

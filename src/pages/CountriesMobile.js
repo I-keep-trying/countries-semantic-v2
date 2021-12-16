@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { isMobile } from 'react-device-detect'
 import {
   Container,
   Button,
@@ -97,14 +96,11 @@ const Countries = () => {
       </Message>
     </Container>
   )
-  const marg1 = activeRegion === 'All' ? 14 : 38
+
+ // console.log('activeSubregion', activeSubregion)
   const CountriesTable = () => (
     <>
-      <Table
-        style={isMobile ? { marginTop: 0 } : { marginTop: marg1 }}
-        selectable
-        stackable
-      >
+      <Table style={{ marginTop: 0 }} selectable stackable>
         <Table.Body>
           {filterBySubregion.map((c) => {
             return (
@@ -170,43 +166,40 @@ const Countries = () => {
             }
             fluid
           >
-            <Grid style={isMobile ? { marginTop: 0 } : { marginTop: -6 }}>
+            <Grid style={{ marginTop: 0 }}>
               {getSubregions[0].subregions.length > 0 ? (
                 <>
                   <Grid.Row>
                     <Menu
                       stackable
-                      size={isMobile ? 'mini' : 'large'}
+                      size="mini"
                       fixed="top"
-                      style={isMobile ? { marginTop: 45 } : { marginTop: 45 }}
-                      widths={7}
+                      style={{ marginTop: 45 }}
                     >
-                      {regions.map((r) => {
-                        return (
-                          <Menu.Item
-                            key={r.id}
-                            name={r.region}
-                            active={activeRegion === r.region}
-                            onClick={handleRegionClick}
-                          />
-                        )
-                      })}
-                    </Menu>
-                    <Menu
-                      stackable
-                      size={isMobile ? 'mini' : 'large'}
-                      fixed="top"
-                      style={isMobile ? { marginTop: 75 } : { marginTop: 89 }}
-                      widths={getSubregions[0].subregions.length}
-                    >
-                      {getSubregions[0].subregions.map((rs) => (
-                        <Menu.Item
-                          key={rs}
-                          name={rs}
-                          active={activeSubregion === rs}
-                          onClick={handleSubregionClick}
-                        />
-                      ))}
+                      <Menu.Item onClick={reset}>All</Menu.Item>
+                      <Menu.Item
+                        name={region}
+                        active={activeRegion === region}
+                        onClick={handleRegionClick}
+                        header
+                      >
+                        {activeRegion}{' '}
+                      </Menu.Item>
+                      {activeSubregion !== '' ? (
+                        <Menu.Item header>{activeSubregion} </Menu.Item>
+                      ) : (
+                        <>
+                          {' '}
+                          {getSubregions[0].subregions.map((rs) => (
+                            <Menu.Item
+                              key={rs}
+                              name={rs}
+                              active={activeSubregion === rs}
+                              onClick={handleSubregionClick}
+                            />
+                          ))}
+                        </>
+                      )}
                     </Menu>
                   </Grid.Row>
                 </>
@@ -214,11 +207,10 @@ const Countries = () => {
                 <>
                   <Grid.Row style={{ margin: 0, padding: 0 }}>
                     <Menu
-                    stackable
-                      size={isMobile ? 'mini' : 'large'}
+                      stackable
+                      size="mini"
                       fixed="top"
-                      style={isMobile ? { marginTop: 45 } : { marginTop: 45 }}
-                      widths={7}
+                      style={{ marginTop: 45 }}
                     >
                       {regions.map((r) => (
                         <Menu.Item

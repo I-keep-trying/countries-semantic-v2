@@ -47,8 +47,8 @@ const HeaderNav = ({
 
   return (
     <>
-      <Menu inverted fixed="top" borderless>
-        <Menu.Item style={{padding: 0}} header>
+      <Menu  inverted fixed="top" borderless>
+        <Menu.Item style={{ padding: 0 }} header>
           <Icon className="App-logo" name="globe" color="teal" size="big" />
           <p> World Countries</p>
         </Menu.Item>
@@ -70,12 +70,12 @@ const HeaderNav = ({
             />
           )}
         </Menu.Item>
-{/*         <Menu.Menu position="right"></Menu.Menu>
- */}      </Menu>
+        <Menu.Menu position="right"></Menu.Menu>
+      </Menu>
     </>
   )
 
-/*   return isMobile ? (
+  /*   return isMobile ? (
     <>
       <Menu inverted fixed="top" borderless fluid>
         <Menu.Item header>
@@ -115,8 +115,6 @@ const HeaderNav = ({
     </>
   )
  */
- 
- 
- }
+}
 
 export default HeaderNav

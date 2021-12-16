@@ -10,7 +10,7 @@ const Footer = () => {
         </Menu.Item>
         <Menu.Item
           as="a"
-          href="https://github.com/I-keep-trying/countries-semantic"
+          href="https://github.com/I-keep-trying/countries-semantic-v2"
         >
           <Icon name="github" size="big" />
         </Menu.Item>

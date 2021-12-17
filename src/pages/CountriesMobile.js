@@ -4,9 +4,10 @@ import {
   Button,
   Image,
   Menu,
-  Grid,
   Table,
   Message,
+  Segment,
+  Icon,
 } from 'semantic-ui-react'
 import Country from './Country'
 import HeaderNav from '../components/Header'
@@ -16,12 +17,14 @@ import regions from '../regions'
 
 const Countries = () => {
   const [input, setInput] = useState('')
-  const [activeRegion, setActiveRegion] = useState('All')
-  const [activeSubregion, setActiveSubregion] = useState('')
   const [region, setRegion] = useState('All')
+  const [activeRegion, setActiveRegion] = useState('All')
   const [subregion, setSubRegion] = useState('')
+  const [activeSubregion, setActiveSubregion] = useState('')
   const [, setCountry] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
+  const [visible, setVisible] = useState(false)
+  const [menu, setMenu] = useState(false)
 
   // get static lists of regions & subregions for labels on tabs
   const getSubregions = regions.filter((r) => {
@@ -49,7 +52,7 @@ const Countries = () => {
     return c.name.toLowerCase().startsWith(input.toLowerCase())
   })
 
-  // handle click of "Details" button
+  // handle click selecting a country
   const handleClick = (c) => {
     // pass full country details from api data
     const countryData = getCountryData.filter((cd) => {
@@ -60,16 +63,24 @@ const Countries = () => {
     setInput(c.name)
   }
 
-  // handle click of a region tab
+// toggle to show selection of regions or 'All'
+  const menuToggle = () => {
+    menu === false ? setMenu(true) : setMenu(false)
+  }
+
+  // handle click of a region 
   const handleRegionClick = (e, { name }) => {
     setCountry(null)
     setSubRegion('')
     setActiveSubregion('')
     setRegion(name)
     setActiveRegion(name)
+    if (name === 'All') {
+      menuToggle()
+    }
   }
 
-  // handle click of a subregion tab
+  // handle click of a subregion 
   const handleSubregionClick = (e, { name }) => {
     setCountry(null)
     setSubRegion(name)
@@ -78,12 +89,20 @@ const Countries = () => {
 
   // when input returns no match
   const reset = () => {
+    if (activeRegion === 'All') {
+      menuToggle()
+    }
     setCountry(null)
     setInput('')
     setRegion('All')
     setActiveRegion('All')
     setSubRegion('')
     setActiveSubregion('')
+  }
+
+// toggle mobile 'hamburger' menu
+  const visibilityToggle = () => {
+    visible === false ? setVisible(true) : setVisible(false)
   }
 
   const NoMatches = () => (
@@ -97,10 +116,28 @@ const Countries = () => {
     </Container>
   )
 
- // console.log('activeSubregion', activeSubregion)
+// set of logs useful for troubleshooting state
+/* console.log('input', input)
+  console.log('menu', menu)
+  console.log('visibility', visible)
+  console.log('activeRegion', activeRegion)
+  console.log('region', region)
+  console.log('activeSubregion', activeSubregion)
+  console.log('subregion', subregion)
+*/
+
   const CountriesTable = () => (
-    <>
-      <Table style={{ marginTop: 0 }} selectable stackable>
+    <Segment
+      style={
+        menu === false && visible === false
+          ? { padding: 0, marginTop: 47 }
+          : { padding: 0, marginTop: 0 }
+      }
+    >
+      <Table
+        selectable
+        stackable
+      >
         <Table.Body>
           {filterBySubregion.map((c) => {
             return (
@@ -121,12 +158,16 @@ const Countries = () => {
           })}
         </Table.Body>
       </Table>
-    </>
+    </Segment>
   )
 
   return (
     <>
       <HeaderNav
+        visible={visible}
+        reset={reset}
+        setMenu={setMenu}
+        visibilityToggle={visibilityToggle}
         input={input}
         setInput={setInput}
         isLoading={isLoading}
@@ -158,79 +199,89 @@ const Countries = () => {
         </>
       ) : (
         <>
-          <Container
-            style={
-              filterBySubregion.length < 250
-                ? { marginTop: 86 }
-                : { marginTop: 95 }
-            }
-            fluid
-          >
-            <Grid style={{ marginTop: 0 }}>
-              {getSubregions[0].subregions.length > 0 ? (
-                <>
-                  <Grid.Row>
-                    <Menu
-                      stackable
-                      size="mini"
-                      fixed="top"
-                      style={{ marginTop: 45 }}
-                    >
-                      <Menu.Item onClick={reset}>All</Menu.Item>
-                      <Menu.Item
-                        name={region}
-                        active={activeRegion === region}
-                        onClick={handleRegionClick}
-                        header
-                      >
-                        {activeRegion}{' '}
-                      </Menu.Item>
-                      {activeSubregion !== '' ? (
-                        <Menu.Item header>{activeSubregion} </Menu.Item>
+          <>
+            {visible ? (
+              <>
+                <Menu
+                  vertical
+                  fluid
+                  size="mini"
+                  attached="top"
+                  style={{ marginTop: 45 }}
+                >
+                  {menu === false ? (
+                    <Menu.Item name="All" onClick={reset}>
+                      All Regions
+                      <Icon name="caret right" />
+                    </Menu.Item>
+                  ) : (
+                    <>
+                      {getSubregions[0].subregions.length > 0 ? (
+                        <>
+                          <Menu.Item name="All" onClick={reset}>
+                            All Regions
+                          </Menu.Item>
+                          <Menu.Item
+                            header
+                            name={activeRegion}
+                            onClick={handleRegionClick}
+                          >
+                            {activeRegion}{' '}
+                          </Menu.Item>
+                          {activeSubregion === '' ? (
+                            <>
+                              {getSubregions[0].subregions.map((rs) => (
+                                <Menu.Item
+                                  key={rs}
+                                  name={rs}
+                                  active={activeSubregion === rs}
+                                  onClick={handleSubregionClick}
+                                />
+                              ))}{' '}
+                            </>
+                          ) : (
+                            <>
+                              <Menu.Item header>{activeSubregion} </Menu.Item>
+                            </>
+                          )}
+                        </>
                       ) : (
                         <>
-                          {' '}
-                          {getSubregions[0].subregions.map((rs) => (
-                            <Menu.Item
-                              key={rs}
-                              name={rs}
-                              active={activeSubregion === rs}
-                              onClick={handleSubregionClick}
-                            />
+                          {regions.map((r) => (
+                            <>
+                              {r.region === 'All' ? (
+                                <Menu.Item
+                                  key={r.id}
+                                  name={r.region}
+                                  active={activeRegion === r.region}
+                                  onClick={handleRegionClick}
+                                >
+                                  All Regions
+                                  <Icon name="caret down" />
+                                </Menu.Item>
+                              ) : (
+                                <Menu.Item
+                                  key={r.id}
+                                  name={r.region}
+                                  active={activeRegion === r.region}
+                                  onClick={handleRegionClick}
+                                >
+                                  {r.region}
+                                </Menu.Item>
+                              )}
+                            </>
                           ))}
                         </>
                       )}
-                    </Menu>
-                  </Grid.Row>
-                </>
-              ) : (
-                <>
-                  <Grid.Row style={{ margin: 0, padding: 0 }}>
-                    <Menu
-                      stackable
-                      size="mini"
-                      fixed="top"
-                      style={{ marginTop: 45 }}
-                    >
-                      {regions.map((r) => (
-                        <Menu.Item
-                          key={r.id}
-                          name={r.region}
-                          active={activeRegion === r.region}
-                          onClick={handleRegionClick}
-                        />
-                      ))}
-                    </Menu>
-                  </Grid.Row>
-                </>
-              )}
-            </Grid>
-            {filterBySubregion.length === 0 ? (
-              <NoMatches />
+                    </>
+                  )}
+                </Menu>
+              </>
             ) : (
-              <CountriesTable />
+              <></>
             )}
-          </Container>
+          </>
+          {filterBySubregion.length === 0 ? <NoMatches /> : <CountriesTable />}
         </>
       )}
     </>

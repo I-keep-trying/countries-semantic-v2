@@ -1,8 +1,13 @@
 import React, { useRef } from 'react'
 import { Menu, Icon, Input } from 'semantic-ui-react'
 import '../assets/css/App.css'
+import { isMobile } from 'react-device-detect'
 
 const HeaderNav = ({
+  visible,
+  reset,
+  setMenu,
+  visibilityToggle,
   input,
   setInput,
   countries,
@@ -34,10 +39,6 @@ const HeaderNav = ({
 
     !isLoading ? setIsLoading(true) : isLoading
     setInput(e.target.value)
-    /* 
-    setTimeout(() => {
-      setIsLoading(false)
-    }, 1500) */
   }
 
   if (countries.length === 1) {
@@ -45,11 +46,42 @@ const HeaderNav = ({
     setSubRegion(countries[0].subregion)
   }
 
+  const closeMobileMenu = () => {
+    reset()
+    visibilityToggle()
+    setMenu(false)
+  }
+
   return (
     <>
-      <Menu  inverted fixed="top" borderless>
+      <Menu
+        inverted
+        fixed="top"
+        borderless
+      >
         <Menu.Item style={{ padding: 0 }} header>
-          <Icon className="App-logo" name="globe" color="teal" size="big" />
+          {isMobile ? (
+            <>
+              {visible ? (
+                <Icon
+                  name="window close"
+                  onClick={closeMobileMenu}
+                  rotated="clockwise"
+                  color="teal"
+                  size="big"
+                />
+              ) : (
+                <Icon
+                  name="bars"
+                  onClick={visibilityToggle}
+                  color="teal"
+                  size="big"
+                />
+              )}
+            </>
+          ) : (
+            <Icon className="App-logo" name="globe" color="teal" size="big" />
+          )}
           <p> World Countries</p>
         </Menu.Item>
         <Menu.Item>
@@ -74,47 +106,6 @@ const HeaderNav = ({
       </Menu>
     </>
   )
-
-  /*   return isMobile ? (
-    <>
-      <Menu inverted fixed="top" borderless fluid>
-        <Menu.Item header>
-          <Icon name="globe" color="teal" size="big" />
-          <p> World Countries</p>
-        </Menu.Item>
-        <Menu.Menu position="right"></Menu.Menu>
-      </Menu>
-    </>
-  ) : (
-    <>
-      <Menu inverted fixed="top" borderless>
-        <Menu.Item header>
-          <Icon className="App-logo" name="globe" color="teal" size="big" />
-          <p> World Countries</p>
-        </Menu.Item>
-        <Menu.Item>
-          {input.length > 0 ? (
-            <Input
-              icon={<Icon name="close" link onClick={clearInput} />}
-              type="search"
-              value={input}
-              onChange={handleChange}
-            />
-          ) : (
-            <Input
-              icon={<Icon name="search" />}
-              type="search"
-              value={input}
-              onChange={handleChange}
-              placeholder="Start typing to search"
-            />
-          )}
-        </Menu.Item>
-        <Menu.Menu position="right"></Menu.Menu>
-      </Menu>
-    </>
-  )
- */
 }
 
 export default HeaderNav

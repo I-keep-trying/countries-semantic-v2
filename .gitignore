@@ -1,7 +1,5 @@
 /node_modules
 .env
-/src/Map/index1.js
-/src/assets/dist
 /world.svg
 /world2.svg
 /src/worldMap.js
@@ -11,6 +9,7 @@
 /src/map-afghanistan.png
 /src/pages/SidebarExample.js
 /src/pages/Country2.js
+/src/pages/CountriesMobile2.js
 
 # Local Netlify folder
 .netlify
